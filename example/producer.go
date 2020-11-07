@@ -22,12 +22,29 @@ func main() {
 		panic(err)
 	}
 
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < 10; i++ {
 		err := p.Enqueue(&redisqueue.Message{
 			Stream: "redisqueue:test",
 			Values: map[string]interface{}{
 				"index": i,
 				"name": fmt.Sprintf("arden:%v", i),
+			},
+		})
+		if err != nil {
+			panic(err)
+		}
+
+		if i%100 == 0 {
+			fmt.Printf("enqueued %d\n", i)
+		}
+	}
+
+	for i := 0; i < 10; i++ {
+		err := p.Enqueue(&redisqueue.Message{
+			Stream: "redisqueue:test1",
+			Values: map[string]interface{}{
+				"index": i,
+				"name": fmt.Sprintf("tujiao:%v", i),
 			},
 		})
 		if err != nil {

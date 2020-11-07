@@ -29,6 +29,7 @@ func main() {
 	}
 
 	c.Register("redisqueue:test", process)
+	c.Register("redisqueue:test1", process1)
 
 	go func() {
 		for err := range c.Errors {
@@ -46,5 +47,12 @@ func process(msg *redisqueue.Message) error {
 	//fmt.Printf("messageid: %v\n", msg.ID)
 	//fmt.Printf("message: %v\n", msg.Stream)
 	fmt.Printf("processing message: %v, %v \n", msg.Values["index"], msg.Values["name"])
+	return nil
+}
+
+func process1(msg *redisqueue.Message) error {
+	//fmt.Printf("messageid: %v\n", msg.ID)
+	//fmt.Printf("message: %v\n", msg.Stream)
+	fmt.Printf("1:processing message: %v, %v \n", msg.Values["index"], msg.Values["name"])
 	return nil
 }
