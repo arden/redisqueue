@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/go-redis/redis/v8"
-	"github.com/robinjoseph08/redisqueue/v2"
+	"github.com/arden/redisqueue"
 )
 
 func main() {

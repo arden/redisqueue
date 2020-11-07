@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/arden/redisqueue"
 	"github.com/go-redis/redis/v8"
-	"github.com/robinjoseph08/redisqueue/v2"
 	"time"
 )
 
