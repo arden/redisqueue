@@ -1,7 +1,8 @@
 package redisqueue
 
 import (
-	"github.com/go-redis/redis/v7"
+	"context"
+	"github.com/go-redis/redis/v8"
 )
 
 // ProducerOptions provide options to configure the Producer.
@@ -22,7 +23,7 @@ type ProducerOptions struct {
 	// RedisClient supersedes the RedisOptions field, and allows you to inject
 	// an already-made Redis Client for use in the consumer. This may be either
 	// the standard client or a cluster client.
-	RedisClient redis.UniversalClient
+	RedisClient *redis.Client
 	// RedisOptions allows you to configure the underlying Redis connection.
 	// More info here:
 	// https://pkg.go.dev/github.com/go-redis/redis/v7?tab=doc#Options.
@@ -52,7 +53,7 @@ func NewProducer() (*Producer, error) {
 
 // NewProducerWithOptions creates a Producer using custom ProducerOptions.
 func NewProducerWithOptions(options *ProducerOptions) (*Producer, error) {
-	var r redis.UniversalClient
+	var r *redis.Client
 
 	if options.RedisClient != nil {
 		r = options.RedisClient
@@ -85,7 +86,7 @@ func (p *Producer) Enqueue(msg *Message) error {
 	} else {
 		args.MaxLen = p.options.StreamMaxLength
 	}
-	id, err := p.redis.XAdd(args).Result()
+	id, err := p.redis.XAdd(context.Background(), args).Result()
 	if err != nil {
 		return err
 	}
