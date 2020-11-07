@@ -14,7 +14,7 @@ func main() {
 	})
 
 	p, err := redisqueue.NewProducerWithOptions(&redisqueue.ProducerOptions{
-		StreamMaxLength:      10000,
+		StreamMaxLength:      10,
 		ApproximateMaxLength: true,
 		RedisClient: redisClient,
 	})

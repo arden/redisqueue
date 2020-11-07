@@ -15,6 +15,8 @@ func main() {
 	})
 
 	c, err := redisqueue.NewConsumerWithOptions(&redisqueue.ConsumerOptions{
+		Name: "arden",
+		GroupName: "arden-group",
 		VisibilityTimeout: 60 * time.Second,
 		BlockingTimeout:   5 * time.Second,
 		ReclaimInterval:   1 * time.Second,
@@ -41,8 +43,8 @@ func main() {
 }
 
 func process(msg *redisqueue.Message) error {
-	fmt.Printf("messageid: %v\n", msg.ID)
-	fmt.Printf("message: %v\n", msg.Stream)
+	//fmt.Printf("messageid: %v\n", msg.ID)
+	//fmt.Printf("message: %v\n", msg.Stream)
 	fmt.Printf("processing message: %v, %v \n", msg.Values["index"], msg.Values["name"])
 	return nil
 }
